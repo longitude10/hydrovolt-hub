@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                    <h5 class="my-3">{{ username }}</h5>
+                    <p class="text-muted mb-1">{{ email }}</p>
+                    <p class="text-muted mb-4">{{ address }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Full Name</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{ fullname }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Customer ID</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{ customer_id }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Email</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{ email }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Username</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{ username }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Address</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{ address }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <p class="mb-4"><span class="text-primary font-italic me-1">Energy and Water Usage</span> Information</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p class="mb-0">Electricity Usage:</p>
+                            <p class="text-muted mb-0">{{ electricity_usage }} kWh</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0">Water Usage:</p>
+                            <p class="text-muted mb-0">{{ water_usage }} liters</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-6">
+                            <p class="mb-0">Electricity Cost:</p>
+                            <p class="text-muted mb-0">Rp{{ electricity_cost }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0">Water Cost:</p>
+                            <p class="text-muted mb-0">Rp{{ water_cost }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-6">
+                            <p class="mb-0">Electricity Usage Status:</p>
+                            <p class="text-muted mb-0">{{ electricity_status }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0">Water Usage Status:</p>
+                            <p class="text-muted mb-0">{{ water_status }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,52 @@
+<!-- templates/perangkat_terhubung.html -->
+{%extends 'base.html'%}
+{%block title%} Linked Devices{%endblock%}
+{%block content%}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perangkat Terhubung</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1 class="mb-4">Perangkat Terhubung</h1>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Limit</th>
+                        <th>User ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for device in devices %}
+                    <tr>
+                        <td>{{ device.id }}</td>
+                        <td>{{ device.name }}</td>
+                        <td>{{ device.limit }}</td>
+                        <td>{{ device.user_id }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2 class="mt-5">Tambah Perangkat Baru</h2>
+            <form action="{{ url_for('add_device') }}" method="POST">
+                <div class="form-group">
+                    <label for="name">Nama Perangkat</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="limit">Limit</label>
+                    <input type="number" class="form-control" id="limit" name="limit" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Tambah Perangkat</button>
+            </form>
+        </div>
+    </body>
+    </html>
+{%endblock%}

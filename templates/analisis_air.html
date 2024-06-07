@@ -1,0 +1,86 @@
+{%extends 'base.html'%}
+{%block title%} Water Usage Analysis {%endblock%}
+{%block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Usage Analysis</title>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Water Usage Analysis</h2>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" id="show7Day">7 Hari</button>
+            <button type="button" class="btn btn-secondary" id="show30Day">30 Hari</button>
+        </div>
+        <div id="chartContainer7" style="height: 400px; width: 100%;"></div>
+        <div id="chartContainer30" style="height: 400px; width: 100%; display: none;"></div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <h4>Total Biaya Air 7 Hari: Rp<span id="totalWaterCost7">{{ total_water_cost_7 }}</span></h4>
+                <h4>Rata Penggunaan Air 7 Hari: <span id="averageUsage7">{{ average_usage_7 }}</span> L</h4>
+            </div>
+            <div class="col-md-6">
+                <h4>Total Biaya Air 30 Hari: Rp<span id="totalWaterCost30">{{ total_water_cost_30 }}</span></h4>
+                <h4>Rata Penggunaan Air 30 Hari: <span id="averageUsage30">{{ average_usage_30 }}</span> L</h4>
+            </div>
+        </div>
+    </div>
+
+    {%block script%}
+    <script>
+        const labels7 = {{ labels_7|tojson }};
+        const data7 = {{ data_7|tojson }};
+        const labels30 = {{ labels_30|tojson }};
+        const data30 = {{ data_30|tojson }};
+
+        function renderChart(containerId, labels, data) {
+            const dataPoints = labels.map((label, index) => ({
+                x: new Date(label),
+                y: data[index]
+            }));
+
+            const chart = new CanvasJS.Chart(containerId, {
+                title: {
+                    text: "Water Daily Usage"
+                },
+                axisX: {
+                    title: "Tanggal",
+                    valueFormatString: "YYYY-MM-DD"
+                },
+                axisY: {
+                    title: "Penggunaan Air (Liter)",
+                    suffix: " L"
+                },
+                data: [{
+                    type: "line",
+                    dataPoints: dataPoints
+                }]
+            });
+            chart.render();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            renderChart('chartContainer7', labels7, data7);
+
+            document.getElementById('show7Day').addEventListener('click', function() {
+                document.getElementById('chartContainer7').style.display = 'block';
+                document.getElementById('chartContainer30').style.display = 'none';
+                renderChart('chartContainer7', labels7, data7);
+            });
+
+            document.getElementById('show30Day').addEventListener('click', function() {
+                document.getElementById('chartContainer7').style.display = 'none';
+                document.getElementById('chartContainer30').style.display = 'block';
+                renderChart('chartContainer30', labels30, data30);
+            });
+        });
+    </script>
+    {%endblock%}
+{%endblock%}
+</body>
+</html>

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Electricity Usage Analysis{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Usage Analysis</title>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Electricity Usage Analysis</h1>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" id="show7DayElectricity">7d</button>
+            <button type="button" class="btn btn-secondary" id="show30DayElectricity">1m</button>
+        </div>
+        <div id="chartContainer7Electricity" style="height: 400px; width: 100%;"></div>
+        <div id="chartContainer30Electricity" style="height: 400px; width: 100%; display: none;"></div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <h4>Electricity Cost in 7d: Rp <span id="totalElectricityCost7">{{ totalElectricityCost7 }}</span></h4>
+                <h4>Average Electricity Usage in 7d: <span id="averageElectricityUsage7">{{ averageElectricityUsage7 }} kWh</span></h4>
+            </div>
+            <div class="col-md-6">
+                <h4>Electricity Cost in 1m : Rp <span id="totalElectricityCost30">{{ totalElectricityCost30 }}</span></h4>
+                <h4>Average Electricity Usage in 1m: <span id="averageElectricityUsage30">{{ averageElectricityUsage30 }} kWh</span></h4>
+            </div>
+        </div>
+    </div>
+    {% block script %}
+    <script>
+        const labels7Electricity = {{ labels_7Electricity|tojson }};
+        const data7Electricity = {{ data_7Electricity|tojson }};
+        const labels30Electricity = {{ labels_30Electricity|tojson }};
+        const data30Electricity = {{ data_30Electricity|tojson }};
+
+        function renderChart(containerId, labels, data) {
+            const dataPoints = labels.map((label, index) => ({
+                x: new Date(label),
+                y: data[index]
+            }));
+
+            const chart = new CanvasJS.Chart(containerId, {
+                title: {
+                    text: 'Electricity Daily Usage'
+                },
+                axisX: {
+                    title: 'Date',
+                    valueFormatString: "YYYY-MM-DD"
+                },
+                axisY: {
+                    title: 'Electricity Usage (kWh)',
+                    suffix: 'kWh'
+                },
+                data: [{
+                    type: "line",
+                    dataPoints: dataPoints
+                }]
+            });
+            chart.render();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            renderChart('chartContainer7Electricity', labels7Electricity, data7Electricity);
+            document.getElementById('show7DayElectricity').addEventListener('click', function () {
+                document.getElementById('chartContainer7Electricity').style.display = 'block';
+                document.getElementById('chartContainer30Electricity').style.display = 'none';
+                renderChart('chartContainer7Electricity', labels7Electricity, data7Electricity);
+            });
+
+            document.getElementById('show30DayElectricity').addEventListener('click', function () {
+                document.getElementById('chartContainer7Electricity').style.display = 'none';
+                document.getElementById('chartContainer30Electricity').style.display = 'block';
+                renderChart('chartContainer30Electricity', labels30Electricity, data30Electricity);
+            });
+        });
+    </script>
+    {% endblock %}
+{% endblock %}
+</body>
+</html>

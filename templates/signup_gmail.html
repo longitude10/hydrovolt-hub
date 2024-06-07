@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sign Up Page{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .signup-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px; 
+            margin: 20px 20px 0 20px; 
+            box-sizing: border-box;
+        }
+        .signup-container h1 {
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            width: 48%;
+        }
+        .signup-container p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .signup-container input[type="email"],
+        .signup-container input[type="text"],
+        .signup-container input[type="password"],
+        .signup-container input[type="number"],
+        .signup-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .signup-container input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .signup-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .message {
+            color: red;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        {% with messages= get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p class="message">{{ msg }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <h1>Sign Up</h1>
+        <form action="{{ url_for('signup') }}" method="post">
+            <div class="form-row">
+                <div class="form-group">
+                    <p>Full Name:</p>
+                    <input type="text" name="fullname" placeholder="Enter Full Name" required/>
+                </div>
+                <div class="form-group">
+                    <p>Customer ID:</p>
+                    <input type="number" name="customer_id" placeholder="Enter Customer ID" required/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <p>Email:</p>
+                    <input type="email" name="email" placeholder="Enter Email" required/>
+                </div>
+                <div class="form-group">
+                    <p>Electric Meter ID:</p>
+                    <input type="number" name="electric_meter_id" placeholder="Enter Electric Meter ID" required/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <p>Username:</p>
+                    <input type="text" name="username" placeholder="Enter Username" required/>
+                </div>
+                <div class="form-group">
+                    <p>Water Meter ID:</p>
+                    <input type="number" name="water_meter_id" placeholder="Enter Water Meter ID" required/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <p>Password:</p>
+                    <input type="password" name="password" placeholder="Enter Password" required/>
+                </div>
+                <div class="form-group">
+                    <p>Address:</p>
+                    <input type="text" name="address" placeholder="Enter Address" required/>
+                </div>
+            </div>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+</body>
+</html>
